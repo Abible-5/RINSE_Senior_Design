@@ -6,6 +6,7 @@ from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
 import os, xacro
 
+
 def _launch(context, *args, **kwargs):
     use_rviz = LaunchConfiguration("rviz").perform(context).lower() == "true"
     use_gui  = LaunchConfiguration("jsp_gui").perform(context).lower() == "true"
@@ -52,7 +53,7 @@ def _launch(context, *args, **kwargs):
     create_node = Node(
         package="ros_gz_sim",
         executable="create",
-        arguments=["-name", "limo", "-topic", "/robot_description", "-x", "0", "-y", "0", "-z", "0.15"],
+        arguments=["-name", "limo", "-topic", "/robot_description", "-x", "0", "-y", "0", "-z", "0"],
         output="screen",
     )
     spawn = TimerAction(period=3.0, actions=[create_node])  # small delay so the world is up
@@ -61,6 +62,7 @@ def _launch(context, *args, **kwargs):
     if use_rviz:
         nodes.append(Node(package="rviz2", executable="rviz2", output="screen"))
     return nodes
+
 
 def generate_launch_description():
     return LaunchDescription([

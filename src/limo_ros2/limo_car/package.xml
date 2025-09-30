@@ -19,7 +19,8 @@
   <depend>xacro</depend>
   <depend>rviz</depend>
   <depend>gazebo</depend>
-  <depend>libgazebo_ros</depend>
+  <depend>ros_gz_sim</depend>
+  <depend>ros_gz_bridge</depend>
   <depend>rqt_robot_steering</depend>
   
   <export>

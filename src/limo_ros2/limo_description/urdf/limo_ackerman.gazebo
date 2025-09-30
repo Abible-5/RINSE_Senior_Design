@@ -25,30 +25,34 @@
     </gazebo>
 
     <gazebo>
-        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-            <robotNamespace>$(arg robot_namespace)</robotNamespace>
-        </plugin>
+        <!-- Removed old libgazebo_ros_control.so (handled via ros2_control + ros_gz) -->
 
-        <plugin name="four_diff_controller" filename="libgazebo_ros_ackerman.so">
-            <updateRate>100.0</updateRate>
-            <robotNamespace>$(arg robot_namespace)</robotNamespace>
-            <leftFrontJoint>front_left_wheel</leftFrontJoint>
-            <rightFrontJoint>front_right_wheel</rightFrontJoint>
-            <leftRearJoint>rear_left_wheel</leftRearJoint>
-            <rightRearJoint>rear_right_wheel</rightRearJoint>
-            <leftHingeJoint>left_steering_hinge_wheel</leftHingeJoint>
-            <rightHingeJoint>right_steering_hinge_wheel</rightHingeJoint>
-            <wheelSeparation>0.172</wheelSeparation>
-            <wheelDiameter>0.09</wheelDiameter>
-            <robotBaseFrame>base_footprint</robotBaseFrame>
-            <commandTopic>cmd_vel</commandTopic>
-            <torque>50</torque>
-            <broadcastTF>true</broadcastTF>
-            <odometryTopic>odom</odometryTopic>
-            <odometryFrame>odom</odometryFrame>
-            <covariance_x>0.000100</covariance_x>
-            <covariance_y>0.000100</covariance_y>
-            <covariance_yaw>0.010000</covariance_yaw>
+        <!-- Modern Ackermann steering plugin -->
+        <plugin name="ackermann_controller" filename="gz-sim-ackermann-steering-system">
+            <update_rate>100</update_rate>
+
+            <!-- Wheel joints -->
+            <front_left_joint>front_left_wheel</front_left_joint>
+            <front_right_joint>front_right_wheel</front_right_joint>
+            <rear_left_joint>rear_left_wheel</rear_left_joint>
+            <rear_right_joint>rear_right_wheel</rear_right_joint>
+
+            <!-- Steering joints -->
+            <left_steering_joint>left_steering_hinge_wheel</left_steering_joint>
+            <right_steering_joint>right_steering_hinge_wheel</right_steering_joint>
+
+            <!-- Physical properties -->
+            <wheel_separation>0.172</wheel_separation>
+            <wheel_radius>0.045</wheel_radius> <!-- half of 0.09 -->
+            <max_steer>0.523598767</max_steer>
+            <max_wheel_torque>50</max_wheel_torque>
+            <max_wheel_acceleration>1.0</max_wheel_acceleration>
+
+            <!-- ROS 2 topics -->
+            <topic>cmd_vel</topic>
+            <odom_topic>odom</odom_topic>
+            <frame_id>odom</frame_id>
+            <child_frame_id>base_link</child_frame_id>
         </plugin>
     </gazebo>
 </robot>
