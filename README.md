@@ -13,3 +13,9 @@ source install/setup.bash
 ## Run
 ros2 launch limo_bringup limo_gz_bringup.launch.py
   #this should launch rviz and gazebo, rviz is probably empty, but gazebo should have the limo
+
+## Run remapping
+ros2 run ros_gz_bridge parameter_bridge /cmd_vel@geometry_msgs/msg/Twist@ignition.msgs.Twist /odom@nav_msgs/msg/Odometry@ignition.msgs.Odometry
+
+## Launch Waypoint
+ros2 launch limo_control limo_waypoint_nav.launch.py
