@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<sdf version="1.7">
+  <world name="no_sun_world">
+    <!-- Gravity but no Sun -->
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>0 0 0</magnetic_field>
+
+    <!-- Keep a simple ground plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <!-- Simple physics for smoother sim -->
+    <physics type="ode">
+      <real_time_update_rate>500</real_time_update_rate>
+      <max_step_size>0.002</max_step_size>
+    </physics>
+  </world>
+</sdf>

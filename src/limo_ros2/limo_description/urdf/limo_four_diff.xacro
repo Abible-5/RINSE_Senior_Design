@@ -196,6 +196,5 @@
         <base_frame>base_footprint</base_frame>
       </plugin>
     </gazebo>
-
 </robot>
 

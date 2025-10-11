@@ -11,9 +11,9 @@ def _launch(context, *args, **kwargs):
     use_rviz = LaunchConfiguration("rviz").perform(context).lower() == "true"
     use_gui  = LaunchConfiguration("jsp_gui").perform(context).lower() == "true"
 
-    # 1) Hard-code the exact xacro that aggregates everything you need
+    # 1) Hard-code the exact xacro
     share_desc = get_package_share_directory("limo_description")
-    HARD_XACRO = os.path.join(share_desc, "urdf", "limo_four_diff.xacro")  # <-- change if you want a different file
+    HARD_XACRO = os.path.join(share_desc, "urdf", "limo_four_diff.xacro")
     if not os.path.exists(HARD_XACRO):
         raise RuntimeError(f"xacro file not found: {HARD_XACRO}")
 
@@ -37,28 +37,65 @@ def _launch(context, *args, **kwargs):
         output="screen",
     )
 
-    # 4) Start Gazebo Sim via its official launch file
+    # 4) Start Gazebo Sim
     ros_gz_share = get_package_share_directory("ros_gz_sim")
     gz_launch = os.path.join(ros_gz_share, "launch", "gz_sim.launch.py")
     if not os.path.exists(gz_launch):
         raise RuntimeError(f"ros_gz_sim launch not found: {gz_launch}")
 
-    # You can add args like: '-r empty.sdf' for headless or just 'empty.sdf' for the default viewer.
     gz = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(gz_launch),
-        launch_arguments={"gz_args": "empty.sdf"}.items()  # start an empty world
+        launch_arguments={"gz_args": "empty.sdf"}.items()
     )
 
-    # 5) Spawn from /robot_description using the 'create' tool you have
+    # 5) Spawn from /robot_description
     create_node = Node(
         package="ros_gz_sim",
         executable="create",
         arguments=["-name", "limo", "-topic", "/robot_description", "-x", "0", "-y", "0", "-z", "0"],
         output="screen",
     )
-    spawn = TimerAction(period=3.0, actions=[create_node])  # small delay so the world is up
+    spawn = TimerAction(period=3.0, actions=[create_node])
 
-    nodes = [rsp, jsp, gz, spawn]
+    bridge_node = Node(
+        package="ros_gz_bridge",
+        executable="parameter_bridge",
+        arguments=[
+            "/cmd_vel@geometry_msgs/msg/Twist@ignition.msgs.Twist",
+            "/world/empty/pose/info@nav_msgs/msg/Odometry@ignition.msgs.Pose_V",
+        ],
+        output="screen",
+    )
+
+    # 6) Controller manager (ros2_control)
+    controller_config = os.path.join(
+        get_package_share_directory('limo_bringup'),
+        'config',
+        'limo_controllers.yaml'
+    )
+
+    control_node = Node(
+        package="controller_manager",
+        executable="ros2_control_node",
+        parameters=[controller_config],
+        output="screen"
+    )
+
+    joint_state_broadcaster_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_state_broadcaster"],
+        output="screen",
+    )
+
+    diff_drive_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["diff_drive_base_controller"],
+        output="screen",
+    )
+
+    nodes = [rsp, jsp, gz, spawn, control_node, joint_state_broadcaster_spawner, diff_drive_spawner, bridge_node]
     if use_rviz:
         nodes.append(Node(package="rviz2", executable="rviz2", output="screen"))
     return nodes
