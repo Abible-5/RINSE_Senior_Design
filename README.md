@@ -6,7 +6,7 @@ sudo apt install ros-jazzy-ros-gz-sim ros-jazzy-xacro ros-jazzy-joint-state-publ
 
 
 ## Build
-cd ~/snr_proj_ws
+cd ~/<name_of_your_workspace>
 colcon build --symlink-install
 source install/setup.bash
 
