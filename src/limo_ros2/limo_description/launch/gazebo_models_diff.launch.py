@@ -82,15 +82,15 @@ def generate_launch_description():
     )
 
     # Bridge ROS 2 <-> Gazebo topics
-    bridge_cmd = Node(
-        package='ros_gz_bridge',
-        executable='parameter_bridge',
-        arguments=[
-            '/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist',
-            '/odom@nav_msgs/msg/Odometry@gz.msgs.Odometry'
-        ],
-        output='screen'
-    )
+    #bridge_cmd = Node(
+        #package='ros_gz_bridge',
+        #executable='parameter_bridge',
+        #arguments=[
+            #'/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist',
+            #'/odom@nav_msgs/msg/Odometry@gz.msgs.Odometry'
+        #],
+        #output='screen'
+    #)
 
     ld = LaunchDescription()
 
@@ -103,6 +103,6 @@ def generate_launch_description():
     ld.add_action(robot_state_publisher_cmd)
     ld.add_action(joint_state_publisher_gui_cmd)
     ld.add_action(rviz_cmd)
-    ld.add_action(bridge_cmd)
+    #ld.add_action(bridge_cmd)
 
     return ld
