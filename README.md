@@ -22,19 +22,19 @@ ros2 launch limo_control limo_waypoint_nav.launch.py
 
 
 ## Custom World
-// Navigate to your workspace.
+// Navigate to your workspace-->  
 cd ~/<your_workspace_name>/src
 
-// Create a custom ROS 2 package.
+// Create a custom ROS 2 package--> 
 ros2 pkg create --build-type ament_cmake custom_world
 
-// Navigate to the package folder.
+// Navigate to the package folder--> 
 cd ~/your_workspace_name/src/custom_world
 
-// Create the worlds folder.
+// Create the worlds folder-->
 mkdir -p worlds
 
-// Create and open the room.world file for editing.
+// Create and open the room.world file for editing--> 
 nano ~/your_workspace_name/src/custom_world/worlds/room.world
 
 ## Paste the following code/description into room.world and save it.
