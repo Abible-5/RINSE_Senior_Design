@@ -825,10 +825,10 @@ nano ~/your_workspace_name/src/custom_world/worlds/room.world
 ```
 
 ## Replace empty world with custom world
-// Go into file.
+// Go into file--> 
 nano ~/<your_workspace_name>/src/limo_bringup/launch/limo_gz_bringup.launch.py
 
-// Find :"gz_args": "empty.sdf" and replace with.
+// Find :"gz_args": "empty.sdf" and replace with--> 
 "gz_args": "~/<your_workspace_name>/src/custom_world/worlds/room.world"
 
 // Save and you should now be able to launch the file with the custom world.
