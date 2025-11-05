@@ -37,7 +37,7 @@ mkdir -p worlds
 // Create and open the room.world file for editing.
 nano ~/your_workspace_name/src/custom_world/worlds/room.world
 
-// Paste the following code/description into room.world and save it.
+## Paste the following code/description into room.world and save it.
 
 <?xml version="1.0" ?>
 <sdf version="1.7">
@@ -819,8 +819,7 @@ nano ~/your_workspace_name/src/custom_world/worlds/room.world
        </visual>
      </link>
    </model>
-
-
+   
   </world>
 </sdf>
 
