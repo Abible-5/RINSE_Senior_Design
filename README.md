@@ -38,7 +38,7 @@ mkdir -p worlds
 nano ~/your_workspace_name/src/custom_world/worlds/room.world
 
 ## Paste the following code/description into room.world and save it.
-
+'''xml
 <?xml version="1.0" ?>
 <sdf version="1.7">
   <world name="room_world">
@@ -822,7 +822,7 @@ nano ~/your_workspace_name/src/custom_world/worlds/room.world
    
   </world>
 </sdf>
-
+'''
 
 ## Replace empty world with custom world
 // Go into file.
