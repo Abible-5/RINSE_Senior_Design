@@ -13,7 +13,8 @@ colcon build --symlink-install
 
 source install/setup.bash
 
-## Run - Terminal 1
+## Run - Terminal 1 
+## Every terminal needs to be sourced after any new build
 source install/setup.bash
 
 ros2 launch limo_bringup limo_gz_bringup.launch.py  
