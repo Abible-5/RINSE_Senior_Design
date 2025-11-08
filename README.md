@@ -14,14 +14,15 @@ colcon build --symlink-install
 source install/setup.bash
 
 ## Run - Terminal 1
-ros2 launch limo_bringup limo_gz_bringup.launch.py
-   #this will launch gazebo into the built world room
+ros2 launch limo_bringup limo_gz_bringup.launch.py  
+
+#this will launch gazebo into the built world room
 
 ## Launch Waypoint - Terminal 2
 ros2 launch limo_control limo_waypoint_nav.launch.py
    
 
-## Run remapping - run if limo will not move
+## Run remapping - ONLY need to run this if limo will not move
 ros2 run ros_gz_bridge parameter_bridge /cmd_vel@geometry_msgs/msg/Twist@ignition.msgs.Twist /odom@nav_msgs/msg/Odometry@ignition.msgs.Odometry
     
 
