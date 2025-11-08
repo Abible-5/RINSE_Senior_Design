@@ -6,7 +6,7 @@ sudo apt install ros-jazzy-ros-gz-sim ros-jazzy-xacro ros-jazzy-joint-state-publ
 
 
 
-## Build (symlink-install will allow file changes to be implemented with needing to rebuild)
+## Build (--symlink-install will allow file changes to be implemented with needing to rebuild)
 cd ~/<name_of_your_workspace>  
 
 colcon build --symlink-install  
