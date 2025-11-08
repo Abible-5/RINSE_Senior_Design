@@ -125,7 +125,7 @@
       <sensor name="laser" type="ray">
         <always_on>true</always_on>
         <visualize>true</visualize>
-        <update_rate>10</update_rate>
+        <update_rate>100</update_rate>
         <ray>
           <scan>
             <horizontal>
@@ -170,31 +170,26 @@
       <mu1>100</mu1><mu2>100</mu2><kp>10000000.0</kp><kd>1.0</kd><minDepth>0.01</minDepth><fdir1>1 0 0</fdir1>
     </gazebo>
 
+    
     <!-- DiffDrive Plugin -->
-    <gazebo>
-      <plugin name="gz::sim::systems::DiffDrive" filename="libgz-sim8-diff-drive-system.so">
-        <update_rate>50</update_rate>
-
-        <!-- Left wheels -->
-        <left_joint>front_left_wheel</left_joint>
+    <gazebo> 
+      <plugin name="gz::sim::systems::DiffDrive" filename="libgz-sim8-diff-drive-system.so"> 
+        <update_rate>100</update_rate> 
+        <!-- Left wheels --> 
+        <left_joint>front_left_wheel</left_joint> 
         <left_joint>rear_left_wheel</left_joint>
-
-        <!-- Right wheels -->
-        <right_joint>front_right_wheel</right_joint>
-        <right_joint>rear_right_wheel</right_joint>
-
-        <!-- Wheel geometry -->
+        <!-- Right wheels -->  
+        <right_joint>front_right_wheel</right_joint> 
+        <right_joint>rear_right_wheel</right_joint> 
+        <!-- Wheel geometry --> 
         <wheel_separation>0.172</wheel_separation>
-        <wheel_radius>0.045</wheel_radius>
-
-        <!-- ROS interface -->
+        <wheel_radius>0.045</wheel_radius> 
+        <!-- ROS interface --> 
         <topic>cmd_vel</topic>
         <odom_topic>odom</odom_topic>
-
-        <!-- Frames -->
+        <!-- Frames --> 
         <odom_frame>odom</odom_frame>
-        <base_frame>base_footprint</base_frame>
+        <base_frame>base_footprint</base_frame> 
       </plugin>
-    </gazebo>
+   </gazebo>
 </robot>
-

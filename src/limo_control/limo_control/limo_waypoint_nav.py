@@ -15,13 +15,13 @@ class WaypointNav(Node):
         self.odom_sub = self.create_subscription(Odometry, "/odom", self.odom_callback, 10)
 
         # --- waypoints ---
-        self.waypoints = [(1.0, 0.0), (2.0, 0.0), (3.0, 1.0)]
+        self.waypoints = [(1.0, 0.0), (2.0, 0.0), (3.0, -1.0)]
         self.current_index = 0
         self.pose = None
 
         # --- tuning ---
         self.max_lin = 0.25
-        self.max_ang = 0.8
+        self.max_ang = 0.9
         self.goal_tolerance = 0.10
         self.pause_duration = 2.0
         self.maneuver_time = 1.2
@@ -33,7 +33,7 @@ class WaypointNav(Node):
         # --- yaw correction factor (tune this) ---
         # If robot thinks it turns MORE than it actually does, use <1.0 (e.g., 0.78)
         # If robot thinks it turns LESS than it actually does, use >1.0
-        self.yaw_correction = 0.65
+        self.yaw_correction = 0.30
 
         # --- controller state ---
         self.stage = "FORWARD"
@@ -43,8 +43,9 @@ class WaypointNav(Node):
         self.last_ang_cmd = 0.0
         self.prev_err = 0.0
 
-        # run at 20 Hz
-        self.timer = self.create_timer(0.05, self.loop)
+       # run at 40 Hz
+        self.timer = self.create_timer(0.025, self.loop)
+
 
     # ================================================================
 
@@ -151,7 +152,7 @@ class WaypointNav(Node):
                     self.stage_start = None
             return
 
-        # --- forward steering ---
+       # --- forward steering ---
         if self.stage == "FORWARD":
             next_x, next_y = self.waypoints[self.current_index]
             raw_err = self.heading_error(next_x, next_y)
@@ -160,18 +161,25 @@ class WaypointNav(Node):
 
             # PD steering
             Kp = 4.0
-            Kd = 0.15
-            dt = 0.05
+            Kd = 0.10
+            dt = 0.025  # matches 40 Hz
             derivative = (err - self.prev_err) / dt
             self.prev_err = err
 
             ang_cmd = Kp * err + Kd * derivative
             ang_cmd = max(min(ang_cmd, self.max_ang), -self.max_ang)
 
+            # --- dynamic linear speed taper ---
+            # Slow down both when close to goal and when heading error is high
+            distance = math.hypot(next_x - self.pose.position.x,
+                          next_y - self.pose.position.y)
+            dist_scale = max(0.25, min(1.0, distance / 0.6))
             turn_scale = max(0.3, 1 - 0.8 * abs(err))
-            cmd.linear.x = self.max_lin * turn_scale
+            cmd.linear.x = self.max_lin * dist_scale * turn_scale
+
             cmd.angular.z = ang_cmd
             self.cmd_pub.publish(cmd)
+
 
 
 # ================================================================
