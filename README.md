@@ -13,7 +13,7 @@ colcon build --symlink-install
 
 source install/setup.bash
 
-## Every terminal needs to be sourced after any new build (source install/setup.bash)
+## Every terminal needs to be sourced after any new build!! (source install/setup.bash)
 
 
 ## Run - Terminal 1  #this will launch gazebo into the built world room
@@ -22,7 +22,7 @@ source install/setup.bash
 ros2 launch limo_bringup limo_gz_bringup.launch.py  
 
 
-## Launch Waypoint - Terminal 2 #this will launch the waypoint controller with waypoints preset inside limo_waypoint_nav.launch.py
+## Launch Waypoint - Terminal 2 #this will launch the waypoint controller
 source install/setup.bash
 
 ros2 launch limo_control limo_waypoint_nav.launch.py
