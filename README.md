@@ -23,9 +23,9 @@ ros2 launch limo_control limo_waypoint_nav.launch.py
 ros2 run ros_gz_bridge parameter_bridge /cmd_vel@geometry_msgs/msg/Twist@ignition.msgs.Twist /odom@nav_msgs/msg/Odometry@ignition.msgs.Odometry
     
 
-The terminal in whuch the waypoint node is launched will have a continous log showing odometry position and eading error.
-Currently, after completing the alignment turn for off-axis waypoints, the odometry reading will decrease as the limo advances forwards for approximately .5 meters, then will start counting back up.
-We do not know why. we do know the odom reading is open loop, so any interference or slippage in the model is not reflected in the odom reading.
+The terminal in which the waypoint node is launched will have a continous log showing odometry position and heading error.
+Currently after completing the alignment turn for off-axis waypoints, the odometry reading will decrease as the limo advances forwards for approximately .5 meters, then will start counting back up,
+but we do not know why. We do know the odom reading is open loop, so any interference or slippage in the model is not reflected in the odom reading.
 Odom also centers at spawn location. Currently limo spawns at (-2,-2), and odom shows (0,0) after spawning.
   
     
