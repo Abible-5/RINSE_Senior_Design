@@ -14,11 +14,15 @@ colcon build --symlink-install
 source install/setup.bash
 
 ## Run - Terminal 1
+source install/setup.bash
+
 ros2 launch limo_bringup limo_gz_bringup.launch.py  
 
 #this will launch gazebo into the built world room
 
 ## Launch Waypoint - Terminal 2
+source install/setup.bash
+
 ros2 launch limo_control limo_waypoint_nav.launch.py
    
 
