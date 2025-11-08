@@ -7,8 +7,10 @@ sudo apt install ros-jazzy-ros-gz-sim ros-jazzy-xacro ros-jazzy-joint-state-publ
 
 
 ## Build
-cd ~/<name_of_your_workspace>
-colcon build --symlink-install
+cd ~/<name_of_your_workspace>  
+
+colcon build --symlink-install  
+
 source install/setup.bash
 
 ## Run - Terminal 1
