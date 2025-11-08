@@ -13,7 +13,7 @@ colcon build --symlink-install
 
 source install/setup.bash
 
-## Every terminal needs to be sourced after any new build!! (source install/setup.bash)
+## Each terminal needs to be sourced after any new build!! (source install/setup.bash)
 
 
 ## Run - Terminal 1  #this will launch gazebo into the built world room
