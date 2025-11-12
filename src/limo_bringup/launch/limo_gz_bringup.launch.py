@@ -48,7 +48,7 @@ def _launch(context, *args, **kwargs):
     )
     spawn = TimerAction(period=3.0, actions=[create])
 
-    # 4) ✅ Single bridge only
+    # 4) Single bridge 
     spawn = TimerAction(period=3.0, actions=[create])
     bridge = TimerAction(
         period=4.0,
